@@ -220,4 +220,5 @@ dmypy.json
 cython_debug/
 
 media/
+test.py
 
