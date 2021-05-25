@@ -1,5 +1,6 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 
 from .models import Place
 
@@ -17,7 +18,7 @@ def main_page(request):
             "properties": {
                 "title": place.title,
                 "placeId": place.id,
-                "detailsUrl": 'static/places/moscow_legends.json'
+                "detailsUrl": reverse(place_details, args=[place.id])
 
             }
         })
