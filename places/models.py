@@ -18,7 +18,13 @@ class Image(models.Model):
                               verbose_name='Место',
                               related_name='images')
     img = models.ImageField(verbose_name='Фото')
-    position = models.PositiveSmallIntegerField(verbose_name='Позиция фото')
+    position = models.PositiveSmallIntegerField(verbose_name='Позиция фото',
+                                                default=0,
+                                                blank=False,
+                                                null=False)
+
+    class Meta(object):
+        ordering = ['position']
 
     def __str__(self):
-        return  f'{self.position}, {self.place}'
+        return f'{self.position}, {self.place}'
