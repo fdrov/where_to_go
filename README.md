@@ -6,6 +6,8 @@
 
 Демо-версия сайта тут.
 
+![главная страница](https://github.com/fdrov/where_to_go/blob/master/screenshots/main_page.png)
+
 ## Как запустить
 
 Для запуска сайта вам понадобится Python 3.8+ версии. Скачайте код с GitHub.
