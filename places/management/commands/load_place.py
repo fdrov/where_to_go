@@ -19,8 +19,11 @@ def load_info(url):
         lat=data['coordinates']['lat'],
         lon=data['coordinates']['lng']
     )
-    if not place_created:
+    if place_created:
+        print(f'Добавляю место {data["title"]}')
+    else:
         print(f'Место {data["title"]} уже добавлено')
+        return
     for position, pic_url in enumerate(data['imgs']):
         response = requests.get(pic_url)
         response.raise_for_status()
