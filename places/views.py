@@ -1,4 +1,4 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
@@ -23,7 +23,7 @@ def main_page(request):
             }
         })
     context = {
-        'data': {
+        'places_geo': {
             "type": "FeatureCollection",
             "features": features
         }
@@ -33,7 +33,7 @@ def main_page(request):
 
 def place_details(request, place_id):
     place = get_object_or_404(Place, id=place_id)
-    data = {
+    payload = {
         "title": place.title,
         "imgs": [image.img.url for image in place.images.all()],
         "description_short": place.description_short,
@@ -43,6 +43,6 @@ def place_details(request, place_id):
             "lng": place.lon
         }
     }
-    return JsonResponse(data,
+    return JsonResponse(payload,
                         safe=False,
                         json_dumps_params={'ensure_ascii': False, 'indent': 2})

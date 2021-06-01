@@ -1,30 +1,30 @@
 import os
 
-import requests as requests
+import requests
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
 
 from places.models import Place
 
 
-def load_info(url):
+def load_place(url):
     response = requests.get(url)
     response.raise_for_status()
-    data = response.json()
+    raw_place = response.json()
 
     place, place_created = Place.objects.get_or_create(
-        title=data['title'],
-        description_short=data['description_short'],
-        description_long=data['description_long'],
-        lat=data['coordinates']['lat'],
-        lon=data['coordinates']['lng']
+        title=raw_place['title'],
+        description_short=raw_place['description_short'],
+        description_long=raw_place['description_long'],
+        lat=raw_place['coordinates']['lat'],
+        lon=raw_place['coordinates']['lng'],
     )
     if place_created:
-        print(f'Добавляю место {data["title"]}')
+        print(f'Добавляю место {raw_place["title"]}')
     else:
-        print(f'Место {data["title"]} уже добавлено')
+        print(f'Место {raw_place["title"]} уже добавлено')
         return
-    for position, pic_url in enumerate(data['imgs']):
+    for position, pic_url in enumerate(raw_place['imgs']):
         response = requests.get(pic_url)
         response.raise_for_status()
 
@@ -48,7 +48,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for url in options['place_url']:
             try:
-                load_info(url)
+                load_place(url)
             except requests.exceptions.RequestException:
                 print(f'\nВозникла ошибка с адресом {url} \n')
                 continue
