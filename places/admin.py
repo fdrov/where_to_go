@@ -28,4 +28,4 @@ class PlaceAdmin(admin.ModelAdmin):
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
     readonly_fields = [image_preview]
-
+    autocomplete_fields = ['place']
