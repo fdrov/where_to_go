@@ -14,10 +14,11 @@ def load_place(url):
 
     place, place_created = Place.objects.get_or_create(
         title=raw_place['title'],
-        description_short=raw_place['description_short'],
-        description_long=raw_place['description_long'],
-        lat=raw_place['coordinates']['lat'],
-        lon=raw_place['coordinates']['lng'],
+        defaults={
+            'description_short': raw_place['description_short'],
+            'description_long': raw_place['description_long'],
+            'lat': raw_place['coordinates']['lat'],
+            'lon': raw_place['coordinates']['lng']},
     )
     if place_created:
         print(f'Добавляю место {raw_place["title"]}')
