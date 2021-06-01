@@ -7,9 +7,8 @@ from .models import Place, Image
 
 def image_preview(obj):
     return format_html(
-        '<img src="{url}" style="max-height: 200px; max-width: 200px;" />'.format(
-            url=obj.img.url
-        )
+        '<img src={} style="max-height: 200px; max-width: 200px;" />',
+        obj.img.url,
     )
 
 
